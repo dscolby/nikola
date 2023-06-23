@@ -17,6 +17,17 @@ CSS = """
         </style>
      """
 
+# Set session state variables to OpenAI Whisper defaults in case the user does not set them
+st.session_state.whisper_model = 'base'
+st.session_state.temperature = 0.00
+st.session_state.temperature_increment_on_fallback = 0.20
+st.session_state.no_speech_threshold = 0.6
+st.session_state.logprob_threshold = -1.0
+st.session_state.compression_ratio_threshold = 2.40
+st.session_state.condition_on_previous_text = True
+st.session_state.word_timestamps = True
+st.session_state.verbose = False
+
 # Changes the default navicon in the browser tab
 st.set_page_config(page_title="Transcription Settings")
 
@@ -64,5 +75,5 @@ with st.form("Model Settings"):
 
     # Show a success message and clear it after five seconds
     success = st.success("Settings Saved!")
-    time.sleep(5)
+    time.sleep(3)
     success.empty()

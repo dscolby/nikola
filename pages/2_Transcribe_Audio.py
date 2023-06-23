@@ -25,15 +25,15 @@ st.set_page_config(page_title="Transcription Settings")
 
 st.markdown(CSS, unsafe_allow_html=True)
 
-uploaded_files = st.file_uploader("Choose one or more audio files")
+audio_file = st.file_uploader("Choose one or more audio files")
 
 model = whisper.load_model(st.session_state.whisper_model)
 
-#with open("audio/" + uploaded_files.name,"wb") as f: 
-      #f.write(uploaded_files) 
+#with open(uploaded_files.name,"wb") as f: 
+      #f.write(uploaded_files.name) 
 
-#result = model.transcribe("audio.mp3", **st.session_state)
+result = model.transcribe(audio_file.name, **st.session_state)
 
-#st.text(result["text"])
+st.text(result["text"])
 
 #st.text(st.session_state.whisper_model)
