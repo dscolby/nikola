@@ -1,5 +1,4 @@
 import streamlit as st
-import os
 import whisper
 
 BODY =  """
@@ -25,15 +24,28 @@ st.set_page_config(page_title="Transcription Settings")
 
 st.markdown(CSS, unsafe_allow_html=True)
 
-audio_file = st.file_uploader("Choose one or more audio files")
 
+def transcribe_recording(re):
+    """
+    Transcribe uploaded text with OpenAI Whisper
+
+    Parameters:
+        (str) re: the path to an audio file
+    """
+    segments_list = []
+    model = whisper.load_model("base")
+    result = model.transcribe(re.name, task="translate", beam_size=3, best_of=3, fp16=False)
+    text_file = open("download/output.txt", "w")
+    segments = result["segments"]
+
+    for segment in segments:
+        segments_list.append(str(segment["start"]) + segment["text"] + "\n")
+        text_file.write("{}".format(segment + "\n"))
+
+
+# Load an audio file and model
+audio_file = st.file_uploader("Choose one or more audio files")
 model = whisper.load_model(st.session_state.whisper_model)
 
-#with open(uploaded_files.name,"wb") as f: 
-      #f.write(uploaded_files.name) 
-
-result = model.transcribe(audio_file.name, **st.session_state)
-
-st.text(result["text"])
-
-#st.text(st.session_state.whisper_model)
+if audio_file:
+    transcribe_recording(audio_file)
