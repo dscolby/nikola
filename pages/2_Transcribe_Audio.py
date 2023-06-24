@@ -1,4 +1,5 @@
 import streamlit as st
+import os
 import whisper
 
 BODY =  """
@@ -32,20 +33,23 @@ def transcribe_recording(re):
     Parameters:
         (str) re: the path to an audio file
     """
-    segments_list = []
     model = whisper.load_model("base")
-    result = model.transcribe(re.name, task="translate", beam_size=3, best_of=3, fp16=False)
-    text_file = open("download/output.txt", "w")
+    result = model.transcribe(re, task="translate", beam_size=3, best_of=3, fp16=False)
     segments = result["segments"]
 
-    for segment in segments:
-        segments_list.append(str(segment["start"]) + segment["text"] + "\n")
-        text_file.write("{}".format(segment + "\n"))
+    with open("temp/output.txt", "w") as f:
+        for segment in segments:
+            l = str(segment["start"]) + segment["text"] + "\n"
+            f.write(l)
 
 
 # Load an audio file and model
 audio_file = st.file_uploader("Choose one or more audio files")
 model = whisper.load_model(st.session_state.whisper_model)
 
+# Write the uploaded file to a temporary folder and transcribe that file
 if audio_file:
-    transcribe_recording(audio_file)
+    filepath = os.path.join("temp", audio_file.name)
+    with open(filepath,"wb") as f:
+         f.write(audio_file.getbuffer())
+    transcribe_recording(filepath)
