@@ -7,7 +7,12 @@ BODY = """
         language text. The main workhorse behind this functionality is OpenAI's Whisper 
         model, which relies on an encoder/decoder architecture with self attention and cross 
         attention. The interface is designed to be as simple as possible while also allowing
-        model settings to be changed.
+        model settings to be changed. The original purpose of Nikola was to enable 
+        transcribing recorded interviews with former members of the FARC and civilians 
+        affected by the Colombian Conflict from Spanish audio to English text. However, 
+        Nikola can transcribe many other languages. 
+        [Here](https://help.openai.com/en/articles/7031512-whisper-api-faq) is a list of 
+        supported languages.
        """
 
 for file in os.listdir("temp"):
