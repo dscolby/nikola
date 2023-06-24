@@ -1,13 +1,15 @@
 import streamlit as st
+from streamlit_extras.switch_page_button import switch_page
 import time
 
 BODY =  """
           The settings below are parameters that will be passed to the OpenAI Whisper model 
           to transcribe the text into English. If you are unsure of what they mean, you can 
           leave them the way they are, as they should work well in most cases. You can also
-          experiment with different settings. For more information see the OpenAI Whisper
+          experiment with different settings. Be aware that using the large or sometimes 
+          medium model might cause the app to crash because is is hosted with Stramlit's 
+          free plan. For more information see the OpenAI Whisper 
           [GitHub page](https://github.com/openai/whisper).
-
         """
 
 # Changes the width of the form so there is not a ton of whitespace
@@ -77,3 +79,7 @@ with st.form("Model Settings"):
     success = st.success("Settings Saved!")
     time.sleep(3)
     success.empty()
+
+
+if st.button("📝 Go To Transcribe Audio"):
+    switch_page("transcribe audio")

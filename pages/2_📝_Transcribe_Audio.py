@@ -1,4 +1,5 @@
 import streamlit as st
+from streamlit_extras.switch_page_button import switch_page
 import os
 import whisper
 
@@ -34,17 +35,22 @@ def transcribe_recording(re):
         (str) re: the path to an audio file
     """
     model = whisper.load_model("base")
-    result = model.transcribe(re, task="translate", beam_size=3, best_of=3, fp16=False)
+    result = model.transcribe(re, task="translate", beam_size=5, best_of=5, fp16=False)
     segments = result["segments"]
 
     with open("temp/output.txt", "w") as f:
         for segment in segments:
-            l = str(segment["start"]) + segment["text"] + "\n"
+            if st.session_state.word_timestamps:
+                l = str(segment["start"]) + segment["text"] + "\n"
+            else:
+                l = segment["text"] + "\n"
+
             f.write(l)
 
 
 # Load an audio file and model
-audio_file = st.file_uploader("Choose one or more audio files")
+audio_file = st.file_uploader("Choose a file to transcribe", 
+                              type=["mp4", "avi", "mov", "mkv", "mp3", "wav", "m4a", "ogg"])
 model = whisper.load_model(st.session_state.whisper_model)
 
 # Write the uploaded file to a temporary folder and transcribe that file
@@ -53,3 +59,8 @@ if audio_file:
     with open(filepath,"wb") as f:
          f.write(audio_file.getbuffer())
     transcribe_recording(filepath)
+
+if os.path.isfile("temp/output.txt"):
+    text_file = open("temp/output.txt")
+    if st.download_button("Download Transcript", text_file):
+        switch_page("about")
