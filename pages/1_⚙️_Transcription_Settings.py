@@ -9,7 +9,7 @@ BODY =  """
           experiment with different settings. Be aware that using the large or sometimes 
           medium model might cause the app to crash because is is hosted with Stramlit's 
           free plan. For more information see the OpenAI Whisper 
-          [GitHub page](https://github.com/openai/whisper).
+          [ GitHub page](https://github.com/openai/whisper).
         """
 
 # Changes the width of the form so there is not a ton of whitespace
@@ -18,17 +18,6 @@ CSS = """
         section.main > div {max-width:75rem}
         </style>
      """
-
-# Set session state variables to OpenAI Whisper defaults in case the user does not set them
-st.session_state.whisper_model = 'base'
-st.session_state.temperature = 0.00
-st.session_state.temperature_increment_on_fallback = 0.20
-st.session_state.no_speech_threshold = 0.6
-st.session_state.logprob_threshold = -1.0
-st.session_state.compression_ratio_threshold = 2.40
-st.session_state.condition_on_previous_text = True
-st.session_state.word_timestamps = True
-st.session_state.verbose = False
 
 # Changes the default navicon in the browser tab
 st.set_page_config(page_title="Transcription Settings")

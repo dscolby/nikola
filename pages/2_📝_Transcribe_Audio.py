@@ -27,6 +27,22 @@ st.set_page_config(page_title="Transcription Settings")
 st.markdown(CSS, unsafe_allow_html=True)
 
 
+def set_defaults():
+    """
+    Set the session state with defaults for the OpenAI Whisper base model
+    """
+    # Set session state variables to OpenAI Whisper defaults in case the user does not set them
+    st.session_state.whisper_model = 'base'
+    st.session_state.temperature = 0.00
+    st.session_state.temperature_increment_on_fallback = 0.20
+    st.session_state.no_speech_threshold = 0.6
+    st.session_state.logprob_threshold = -1.0
+    st.session_state.compression_ratio_threshold = 2.40
+    st.session_state.condition_on_previous_text = True
+    st.session_state.word_timestamps = True
+    st.session_state.verbose = False
+
+
 def transcribe_recording(re):
     """
     Transcribe uploaded text with OpenAI Whisper
@@ -47,6 +63,11 @@ def transcribe_recording(re):
 
             f.write(l)
 
+
+# If there are no model settings saved, use the defaults
+# This can happen if a user goes from Aout to Transcribe Audio and does not save settings
+if not st.session_state or len(st.session_state) != 9:
+    set_defaults()
 
 # Load an audio file and model
 audio_file = st.file_uploader("Choose a file to transcribe", 
