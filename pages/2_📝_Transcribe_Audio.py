@@ -53,7 +53,6 @@ def set_defaults():
     st.session_state.compression_ratio_threshold = 2.40
     st.session_state.condition_on_previous_text = True
     st.session_state.word_timestamps = True
-    st.session_state.verbose = False
 
 
 @st.cache(show_spinner=False, ttl=1)

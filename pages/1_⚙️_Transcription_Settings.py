@@ -47,7 +47,6 @@ def save_settings():
     st.session_state.compression_ratio_threshold = compression
     st.session_state.condition_on_previous_text = previous_text
     st.session_state.word_timestamps = timestamps
-    st.session_state.verbose = verbose
 
 
 st.title("Transcription Settings")
@@ -71,7 +70,6 @@ with st.form("Model Settings"):
     previous_text = st.checkbox("Condition On Previous Text", 
                                 key="condition_on_previous_text", value=True)
     timestamps = st.checkbox("Timestamps", key="word_timestamps", value=True)
-    verbose = st.checkbox("Verbose", key="verbose", value=False)
     
     save_settings = st.form_submit_button("💾 Save Settings", on_click=save_settings)
 
