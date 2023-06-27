@@ -96,16 +96,24 @@ def transcribe_with_spinner():
         del audio_file
 
 
-# If there are no model settings saved, use the defaults
-# This can happen if a user goes from Aout to Transcribe Audio and does not save settings
-if not st.session_state or len(st.session_state) != 9:
-    set_defaults()
+def download_file():
+    """
+    Downloads a transcript to the user's computer
+    """
+    if os.path.isfile("temp/output.txt"):
+        text_file = open("temp/output.txt")
+        today = date.today()
+        if st.download_button("Download Transcript", text_file, 
+                              file_name="transcribed_audio_" + str(today) + ".txt"):
+            switch_page("about")
 
-transcribe_with_spinner()
 
-if os.path.isfile("temp/output.txt"):
-    text_file = open("temp/output.txt")
-    today = date.today()
-    if st.download_button("Download Transcript", text_file, 
-                          file_name="transcribed_audio_" + str(today) + ".txt"):
-        switch_page("about")
+if __name__ == '__main__':
+    # If there are no model settings saved, use the defaults
+    # This happens if a user goes from About to Transcribe Audio and before saving settings
+    if not st.session_state or len(st.session_state) != 9:
+        set_defaults()
+
+    transcribe_with_spinner()
+    download_file()
+
