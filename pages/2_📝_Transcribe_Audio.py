@@ -64,18 +64,21 @@ def transcribe_recording(re):
         (str) re: the path to an audio file
     """
     with st.spinner("Transcription in progress"):
-        model = whisper.load_model("base")
-        result = model.transcribe(re, task="translate", beam_size=5, best_of=5, fp16=False)
-        segments = result["segments"]
+        # while True: break ensures the spinner stops running after the function terminates
+        while True:
+            model = whisper.load_model("base")
+            result = model.transcribe(re, task="translate", beam_size=5, best_of=5, fp16=False)
+            segments = result["segments"]
 
-        with open("temp/output.txt", "w") as f:
-            for segment in segments:
-                if st.session_state.word_timestamps:
-                    l = str(segment["start"]) + segment["text"] + "\n"
-                else:
-                    l = segment["text"] + "\n"
+            with open("temp/output.txt", "w") as f:
+                for segment in segments:
+                    if st.session_state.word_timestamps:
+                        l = str(segment["start"]) + segment["text"] + "\n"
+                    else:
+                        l = segment["text"] + "\n"
 
-                f.write(l)
+                    f.write(l)
+            break
 
 
 # If there are no model settings saved, use the defaults
