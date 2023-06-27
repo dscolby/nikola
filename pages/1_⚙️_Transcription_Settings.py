@@ -80,7 +80,7 @@ def model_settings():
                                     key="condition_on_previous_text", value=True)
         timestamps = st.checkbox("Timestamps", key="word_timestamps", value=True)
     
-        save_settings = st.form_submit_button("💾 Save Settings", on_click=save_settings)
+        st.form_submit_button("💾 Save Settings", on_click=save_settings)
 
         # Show a success message and clear it after five seconds
         success = st.success("Settings Saved!")
