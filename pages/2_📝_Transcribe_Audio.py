@@ -64,7 +64,7 @@ def transcribe_recording(re):
     Parameters:
         (str) re: the path to an audio file
     """
-    model = whisper.load_model("base")
+    model = whisper.load_model(st.session_state.whisper_model)
     result = model.transcribe(re, task="translate", beam_size=5, best_of=5, fp16=False)
     segments = result["segments"]
 
@@ -82,6 +82,10 @@ def transcribe_with_spinner():
     """
     Transcribes an audio file and manages the spinner
     """
+    # Load an audio file and model
+    audio_file = st.file_uploader("Choose a file to transcribe", 
+                              type=["mp4", "avi", "mov", "mkv", "mp3", "wav", "m4a", "ogg"])
+    
     # Write the uploaded file to a temporary folder and transcribe that file
     if audio_file:
         filepath = os.path.join("temp", audio_file.name)
@@ -97,11 +101,6 @@ def transcribe_with_spinner():
 # This can happen if a user goes from Aout to Transcribe Audio and does not save settings
 if not st.session_state or len(st.session_state) != 9:
     set_defaults()
-
-# Load an audio file and model
-audio_file = st.file_uploader("Choose a file to transcribe", 
-                              type=["mp4", "avi", "mov", "mkv", "mp3", "wav", "m4a", "ogg"])
-model = whisper.load_model(st.session_state.whisper_model)
 
 transcribe_with_spinner()
 
