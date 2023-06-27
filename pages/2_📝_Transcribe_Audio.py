@@ -91,7 +91,7 @@ def transcribe_with_spinner():
         with open(filepath,"wb") as f:
             f.write(audio_file.getbuffer())
 
-        with st.spinner(f"Transcribing with {st.session_state.whisper_model} model"):
+        with st.spinner("Transcription in progress"):
             transcribe_recording(filepath)
         del audio_file
 

@@ -6,10 +6,13 @@ BODY =  """
           The settings below are parameters that will be passed to the OpenAI Whisper model 
           to transcribe the text into English. If you are unsure of what they mean, you can 
           leave them the way they are, as they should work well in most cases. You can also
-          experiment with different settings. Be aware that using the large or sometimes 
-          medium model might cause the app to crash because is is hosted with Stramlit's 
-          free plan. For more information see the OpenAI Whisper 
-          [ GitHub page](https://github.com/openai/whisper).
+          experiment with different settings. If you would like more information on what 
+          they do you can go to the OpenAI Whisper [GitHub page](https://github.com/openai/whisper).
+
+          WARNING: Using the medium and large models will cause the server to crash because 
+          is hosted on Streamlit's free tier. If you want to use the medium or large model 
+          you should run it locally by following [these](https://github.com/dscolby/nikola) 
+          instructions.
         """
 
 # Changes the width of the form so there is not a ton of whitespace and adds a title to the
