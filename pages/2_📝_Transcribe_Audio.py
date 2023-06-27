@@ -111,7 +111,7 @@ def download_file():
 if __name__ == '__main__':
     # If there are no model settings saved, use the defaults
     # This happens if a user goes from About to Transcribe Audio and before saving settings
-    if not st.session_state or len(st.session_state) != 8:
+    if not st.session_state:
         set_defaults()
 
     transcribe_with_spinner()
