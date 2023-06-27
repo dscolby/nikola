@@ -80,14 +80,15 @@ def model_settings():
                                     key="condition_on_previous_text", value=True)
         timestamps = st.checkbox("Timestamps", key="word_timestamps", value=True)
     
-        st.form_submit_button("💾 Save Settings", on_click=save_settings, 
-                              args=(model, temperature, temp_inc, no_speech, logprob, 
-                                    compression, previous_text, timestamps))
+        submit = st.form_submit_button("💾 Save Settings")
 
-        # Show a success message and clear it after five seconds
-        success = st.success("Settings Saved!")
-        time.sleep(3)
-        success.empty()
+        if submit:
+            # Show a success message and clear it after five seconds
+            success = st.success("Settings Saved!")
+            time.sleep(3)
+            success.empty()
+            save_settings(model, temperature, temp_inc, no_speech, logprob, compression, 
+                          previous_text, timestamps)
 
 
 def next_page():
