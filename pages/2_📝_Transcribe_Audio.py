@@ -89,10 +89,11 @@ model = whisper.load_model(st.session_state.whisper_model)
 
 # Write the uploaded file to a temporary folder and transcribe that file
 if audio_file:
-    filepath = os.path.join("temp", audio_file.name)
-    with open(filepath,"wb") as f:
-         f.write(audio_file.getbuffer())
-    transcribe_recording(filepath)
+    with st.spinner("Transcription in progress"):
+        filepath = os.path.join("temp", audio_file.name)
+        with open(filepath,"wb") as f:
+            f.write(audio_file.getbuffer())
+        transcribe_recording(filepath)
 
 if os.path.isfile("temp/output.txt"):
     text_file = open("temp/output.txt")
