@@ -64,20 +64,16 @@ def model_settings():
     """
     with st.form("Model Settings"):
         model = st.selectbox(label="Model", 
-                             options=('tiny', 'base', 'small', 'medium', 'large'), 
-                             key="whisper_model", index=1)
-        temperature = st.number_input("Temperature", 0.00, 1.00, 0.00, step=0.10, 
-                                      key="temperature")
+                             options=('tiny', 'base', 'small', 'medium', 'large'), index=1)
+        temperature = st.number_input("Temperature", 0.00, 1.00, 0.00, step=0.10)
         temp_inc = st.number_input("Temperature Increment On Fallback", 0.00, 1.00, 0.20, 
-                                   step=0.10, key="temperature_increment_on_fallback")
+                                   step=0.10)
         no_speech = st.number_input("No Speech Threshold", 0.00, 1.00, 0.60, 
-                                    step=0.10, key="no_speech_threshold")
-        logprob = st.number_input("Log Probability Threshold", -20.0, 0.0, -1.0, 
-                                  step=0.50, key="logprob_threshold")
+                                    step=0.10)
+        logprob = st.number_input("Log Probability Threshold", -20.0, 0.0, -1.0, step=0.50)
         compression = st.number_input("Compression Ratio Threshold", 0.0, 10.0, 2.40, 
-                                      step=0.20, key="compression_ratio_threshold")
-        previous_text = st.checkbox("Condition On Previous Text", 
-                                    key="condition_on_previous_text", value=True)
+                                      step=0.20)
+        previous_text = st.checkbox("Condition On Previous Text", value=True)
         timestamps = st.checkbox("Timestamps", key="word_timestamps", value=True)
     
         submit = st.form_submit_button("💾 Save Settings")
