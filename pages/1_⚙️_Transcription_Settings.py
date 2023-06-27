@@ -43,7 +43,8 @@ def setup():
     st.write(BODY)
 
 
-def save_settings():
+def save_settings(model, temperature, temp_inc, no_speech, logprob, compression, 
+                  previous_text, timestamps):
     """Callback function to set the session state with settings to be passed to the Whisper 
         model
     """
@@ -61,8 +62,6 @@ def model_settings():
     """
     Generate the form for model settings
     """
-    global model, temperature, temp_inc, no_speech, logprob, compression, previous_text
-    global timestamps
     with st.form("Model Settings"):
         model = st.selectbox(label="Model", 
                              options=('tiny', 'base', 'small', 'medium', 'large'), 
@@ -81,10 +80,9 @@ def model_settings():
                                     key="condition_on_previous_text", value=True)
         timestamps = st.checkbox("Timestamps", key="word_timestamps", value=True)
     
-        submit = st.form_submit_button("💾 Save Settings")
-        
-        if submit:
-            save_settings()
+        st.form_submit_button("💾 Save Settings", on_click=save_settings, 
+                              args=(model, temperature, temp_inc, no_speech, logprob, 
+                                    compression, previous_text, timestamps))
 
         # Show a success message and clear it after five seconds
         success = st.success("Settings Saved!")
@@ -102,7 +100,5 @@ def next_page():
 
 if __name__ == '__main__':
     setup()
-    while True:
-        model_settings()
-        break
+    model_settings()
     next_page()
