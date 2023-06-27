@@ -38,6 +38,7 @@ def setup():
     # Changes the default navicon in the browser tab
     st.set_page_config(page_title="Transcription Settings")
     st.markdown(CSS, unsafe_allow_html=True)
+    st.session_state.disabled = False
     st.title("Transcription Settings")
     st.write(BODY)
 
@@ -99,8 +100,6 @@ def next_page():
 
 
 if __name__ == '__main__':
-    st.session_state.disabled = False
-
     setup()
     model_settings()
     next_page()
