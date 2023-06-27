@@ -63,18 +63,19 @@ def transcribe_recording(re):
     Parameters:
         (str) re: the path to an audio file
     """
-    model = whisper.load_model("base")
-    result = model.transcribe(re, task="translate", beam_size=5, best_of=5, fp16=False)
-    segments = result["segments"]
+    with st.spinner("Transcription in progress"):
+        model = whisper.load_model("base")
+        result = model.transcribe(re, task="translate", beam_size=5, best_of=5, fp16=False)
+        segments = result["segments"]
 
-    with open("temp/output.txt", "w") as f:
-        for segment in segments:
-            if st.session_state.word_timestamps:
-                l = str(segment["start"]) + segment["text"] + "\n"
-            else:
-                l = segment["text"] + "\n"
+        with open("temp/output.txt", "w") as f:
+            for segment in segments:
+                if st.session_state.word_timestamps:
+                    l = str(segment["start"]) + segment["text"] + "\n"
+                else:
+                    l = segment["text"] + "\n"
 
-            f.write(l)
+                f.write(l)
 
 
 # If there are no model settings saved, use the defaults
@@ -89,11 +90,10 @@ model = whisper.load_model(st.session_state.whisper_model)
 
 # Write the uploaded file to a temporary folder and transcribe that file
 if audio_file:
-    with st.spinner("Transcription in progress"):
-        filepath = os.path.join("temp", audio_file.name)
-        with open(filepath,"wb") as f:
-            f.write(audio_file.getbuffer())
-        transcribe_recording(filepath)
+    filepath = os.path.join("temp", audio_file.name)
+    with open(filepath,"wb") as f:
+        f.write(audio_file.getbuffer())
+    transcribe_recording(filepath)
 
 if os.path.isfile("temp/output.txt"):
     text_file = open("temp/output.txt")
