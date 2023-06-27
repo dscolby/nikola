@@ -74,7 +74,7 @@ def model_settings():
         compression = st.number_input("Compression Ratio Threshold", 0.0, 10.0, 2.40, 
                                       step=0.20)
         previous_text = st.checkbox("Condition On Previous Text", value=True)
-        timestamps = st.checkbox("Timestamps", key="word_timestamps", value=True)
+        timestamps = st.checkbox("Timestamps", value=True)
     
         submit = st.form_submit_button("💾 Save Settings")
 
