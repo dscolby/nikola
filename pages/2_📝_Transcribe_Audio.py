@@ -1,5 +1,6 @@
 import streamlit as st
 from streamlit_extras.switch_page_button import switch_page
+from datetime import date
 import os
 import whisper
 
@@ -95,5 +96,7 @@ if audio_file:
 
 if os.path.isfile("temp/output.txt"):
     text_file = open("temp/output.txt")
-    if st.download_button("Download Transcript", text_file):
+    today = date.today()
+    if st.download_button("Download Transcript", text_file, 
+                          file_name="transcribed_audio_" + today):
         switch_page("about")
