@@ -12,10 +12,21 @@ BODY =  """
           [ GitHub page](https://github.com/openai/whisper).
         """
 
-# Changes the width of the form so there is not a ton of whitespace
+# Changes the width of the form so there is not a ton of whitespace and adds a title to the
+# Menu
 CSS = """
         <style>
         section.main > div {max-width:75rem}
+        </style>
+        <style>
+            [data-testid="stSidebarNav"]::before {
+                content: "Menu";
+                margin-left: 20px;
+                margin-top: 20px;
+                font-size: 30px;
+                position: relative;
+                top: 100px;
+            }
         </style>
      """
 

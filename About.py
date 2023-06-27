@@ -23,6 +23,7 @@ st.set_page_config(page_title="About")
 
 st.title("Nikola")
 
+# Adds title to the menu bar
 st.markdown(
         """
         <style>
