@@ -99,5 +99,7 @@ def next_page():
 
 if __name__ == '__main__':
     setup()
-    model_settings()
+    while True:
+        model_settings()
+        break
     next_page()
