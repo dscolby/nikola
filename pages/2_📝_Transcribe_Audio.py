@@ -98,5 +98,5 @@ if os.path.isfile("temp/output.txt"):
     text_file = open("temp/output.txt")
     today = date.today()
     if st.download_button("Download Transcript", text_file, 
-                          file_name="transcribed_audio_" + today):
+                          file_name="transcribed_audio_" + today + ".txt"):
         switch_page("about")
