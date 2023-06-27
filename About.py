@@ -18,6 +18,9 @@ BODY = """
 for file in os.listdir("temp"):
     os.remove(f"temp/{file}")
 
+# Changes the default navicon in the browser tab
+st.set_page_config(page_title="About")
+
 st.title("Nikola")
 
 st.markdown(
