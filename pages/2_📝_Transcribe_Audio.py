@@ -56,7 +56,7 @@ def set_defaults():
     st.session_state.verbose = False
 
 
-@st.cache(suppress_st_warning=True)
+@st.cache(allow_output_mutation=True)
 def transcribe_recording(re):
     """
     Transcribe uploaded text with OpenAI Whisper
