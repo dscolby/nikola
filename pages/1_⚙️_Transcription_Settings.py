@@ -55,7 +55,6 @@ def save_settings():
     st.session_state.compression_ratio_threshold = compression
     st.session_state.condition_on_previous_text = previous_text
     st.session_state.word_timestamps = timestamps
-    st.session_state.disabled = True
 
 
 def model_settings():
@@ -82,13 +81,15 @@ def model_settings():
                                     key="condition_on_previous_text", value=True)
         timestamps = st.checkbox("Timestamps", key="word_timestamps", value=True)
     
-        st.form_submit_button("💾 Save Settings", on_click=save_settings, 
-                              disabled=st.session_state.disabled)
+        save_settings = st.form_submit_button("💾 Save Settings", on_click=save_settings)
+
+        if save_settings:
+                switch_page("transcribe audio")
 
         # Show a success message and clear it after five seconds
-        success = st.success("Settings Saved!")
-        time.sleep(3)
-        success.empty()
+        #success = st.success("Settings Saved!")
+        #time.sleep(3)
+        #success.empty()
 
 
 def next_page():
@@ -102,4 +103,4 @@ def next_page():
 if __name__ == '__main__':
     setup()
     model_settings()
-    next_page()
+    #next_page()
