@@ -92,12 +92,11 @@ if audio_file:
     filepath = os.path.join("temp", audio_file.name)
     with open(filepath,"wb") as f:
         f.write(audio_file.getbuffer())
-    
+
     with st.spinner("Transcription in progress"):
-        # Ensures the spinner stops after transcribing the audio
-        while True:
-            transcribe_recording(filepath)
-            break
+        transcribe_recording(filepath)
+    del audio_file
+        
 
 if os.path.isfile("temp/output.txt"):
     text_file = open("temp/output.txt")
