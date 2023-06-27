@@ -30,10 +30,17 @@ CSS = """
         </style>
      """
 
-# Changes the default navicon in the browser tab
-st.set_page_config(page_title="Transcription Settings")
 
-st.markdown(CSS, unsafe_allow_html=True)
+def setup():
+    """
+    Set up the basic page structure
+    """
+    # Changes the default navicon in the browser tab
+    st.set_page_config(page_title="Transcription Settings")
+    st.markdown(CSS, unsafe_allow_html=True)
+    st.title("Transcription Settings")
+    st.write(BODY)
+
 
 def save_settings():
     """Callback function to set the session state with settings to be passed to the Whisper 
@@ -49,35 +56,47 @@ def save_settings():
     st.session_state.word_timestamps = timestamps
 
 
-st.title("Transcription Settings")
-
-st.write(BODY)
-
-with st.form("Model Settings"):
-    model = st.selectbox(label="Model", 
-                         options=('tiny', 'base', 'small', 'medium', 'large'), 
-                         key="whisper_model", index=1)
-    temperature = st.number_input("Temperature", 0.00, 1.00, 0.00, step=0.10, 
-                                  key="temperature")
-    temp_inc = st.number_input("Temperature Increment On Fallback", 0.00, 1.00, 0.20, 
-                               step=0.10, key="temperature_increment_on_fallback")
-    no_speech = st.number_input("No Speech Threshold", 0.00, 1.00, 0.60, 
-                               step=0.10, key="no_speech_threshold")
-    logprob = st.number_input("Log Probability Threshold", -20.0, 0.0, -1.0, 
-                               step=0.50, key="logprob_threshold")
-    compression = st.number_input("Compression Ratio Threshold", 0.0, 10.0, 2.40, 
-                               step=0.20, key="compression_ratio_threshold")
-    previous_text = st.checkbox("Condition On Previous Text", 
-                                key="condition_on_previous_text", value=True)
-    timestamps = st.checkbox("Timestamps", key="word_timestamps", value=True)
+def model_settings():
+    """
+    Generate the form for model settings
+    """
+    global model, temperature, temp_inc, no_speech, logprob, compression, previous_text
+    global timestamps
+    with st.form("Model Settings"):
+        model = st.selectbox(label="Model", 
+                             options=('tiny', 'base', 'small', 'medium', 'large'), 
+                             key="whisper_model", index=1)
+        temperature = st.number_input("Temperature", 0.00, 1.00, 0.00, step=0.10, 
+                                      key="temperature")
+        temp_inc = st.number_input("Temperature Increment On Fallback", 0.00, 1.00, 0.20, 
+                                   step=0.10, key="temperature_increment_on_fallback")
+        no_speech = st.number_input("No Speech Threshold", 0.00, 1.00, 0.60, 
+                                    step=0.10, key="no_speech_threshold")
+        logprob = st.number_input("Log Probability Threshold", -20.0, 0.0, -1.0, 
+                                  step=0.50, key="logprob_threshold")
+        compression = st.number_input("Compression Ratio Threshold", 0.0, 10.0, 2.40, 
+                                      step=0.20, key="compression_ratio_threshold")
+        previous_text = st.checkbox("Condition On Previous Text", 
+                                    key="condition_on_previous_text", value=True)
+        timestamps = st.checkbox("Timestamps", key="word_timestamps", value=True)
     
-    save_settings = st.form_submit_button("💾 Save Settings", on_click=save_settings)
+        save_settings = st.form_submit_button("💾 Save Settings", on_click=save_settings)
 
-    # Show a success message and clear it after five seconds
-    success = st.success("Settings Saved!")
-    time.sleep(3)
-    success.empty()
+        # Show a success message and clear it after five seconds
+        success = st.success("Settings Saved!")
+        time.sleep(3)
+        success.empty()
 
 
-if st.button("📝 Go To Transcribe Audio"):
-    switch_page("transcribe audio")
+def next_page():
+    """
+    Go to the Transcribe Audio page
+    """
+    if st.button("📝 Go To Transcribe Audio"):
+        switch_page("transcribe audio")
+
+
+if __name__ == '__main__':
+    setup()
+    model_settings()
+    next_page()
