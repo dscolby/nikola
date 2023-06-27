@@ -3,6 +3,10 @@ from streamlit_extras.switch_page_button import switch_page
 from datetime import date
 import os
 import whisper
+from streamlit.web.server.server import TORNADO_SETTINGS
+
+# Change ping timeout so that long running transcriptions do not time out
+TORNADO_SETTINGS["websocket_ping_timeout"] = 600
 
 BODY =  """
           The settings below are parameters that will be passed to the OpenAI Whisper model 
