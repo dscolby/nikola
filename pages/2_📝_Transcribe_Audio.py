@@ -59,7 +59,7 @@ def set_defaults():
     st.session_state.word_timestamps = True
 
 
-@st.experimental_singleton
+@st.cache(show_spinner=False, ttl=1)
 def transcribe_recording(re):
     """
     Transcribe uploaded text with OpenAI Whisper
