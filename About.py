@@ -1,6 +1,7 @@
 import streamlit as st
 import os
 from streamlit_extras.switch_page_button import switch_page
+from streamlit.web.server.server import TORNADO_SETTINGS
 
 BODY = """
         Nikola is an experimental tool to transcribe non-English language audio to English 
@@ -14,6 +15,9 @@ BODY = """
         [Here](https://help.openai.com/en/articles/7031512-whisper-api-faq) is a list of 
         supported languages.
        """
+
+# Change ping timeout so that long running transcriptions do not time out
+TORNADO_SETTINGS["websocket_ping_timeout"] = 100000
 
 for file in os.listdir("temp"):
     os.remove(f"temp/{file}")
