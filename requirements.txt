@@ -3,3 +3,4 @@ numpy==1.25.0
 openai-whisper==20230124
 streamlit==1.23.1
 streamlit-extras==0.2.7
+torch==2.0.1 --extra-index-url https://download.pytorch.org/whl/cu117
