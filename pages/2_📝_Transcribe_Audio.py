@@ -3,6 +3,7 @@ from streamlit_extras.switch_page_button import switch_page
 from datetime import date
 import os
 import whisper
+import torch
 
 BODY =  """
           The settings below are parameters that will be passed to the OpenAI Whisper model 
@@ -63,8 +64,15 @@ def transcribe_recording(re):
     Parameters:
         (str) re: the path to an audio file
     """
-    model = whisper.load_model(st.session_state.whisper_model)
-    result = model.transcribe(re, task="translate", beam_size=5, best_of=5, fp16=False)
+    # Set up using the GPU
+    if torch.cuda.is_available():
+        torch.cuda.init()
+        device = "cuda"
+        model = whisper.load_model(st.session_state.whisper_model).to(device)
+    else:
+        model = whisper.load_model(st.session_state.whisper_model)
+
+    result = model.transcribe(re, task="translate", beam_size=5, best_of=5)
     segments = result["segments"]
 
     with open("temp/output.txt", "w") as f:
@@ -80,7 +88,7 @@ def transcribe_recording(re):
 def transcribe_with_spinner():
     """
     Transcribes an audio file and manages the spinner
-    """
+    """ 
     # Load an audio file and model
     audio_file = st.file_uploader("Choose a file to transcribe", 
                               type=["mp4", "avi", "mov", "mkv", "mp3", "wav", "m4a", "ogg"])
